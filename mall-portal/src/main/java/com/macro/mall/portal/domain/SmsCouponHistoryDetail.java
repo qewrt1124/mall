@@ -11,16 +11,16 @@ import lombok.Setter;
 import java.util.List;
 
 /**
- * 优惠券领取历史详情（包括优惠券信息和关联关系）
+ * 쿠폰 수령 내역 (쿠폰 정보 및 소속 포함)
  * Created by macro on 2018/8/29.
  */
 @Getter
 @Setter
 public class SmsCouponHistoryDetail extends SmsCouponHistory {
-    @ApiModelProperty("相关优惠券信息")
+    @ApiModelProperty("相关优惠券信息") //관련 쿠폰 정보
     private SmsCoupon coupon;
-    @ApiModelProperty("优惠券关联商品")
+    @ApiModelProperty("优惠券关联商品") //쿠폰 관련 상품
     private List<SmsCouponProductRelation> productRelationList;
-    @ApiModelProperty("优惠券关联商品分类")
+    @ApiModelProperty("优惠券关联商品分类") //쿠폰은 제품 범주와 연결되어 있습니다.
     private List<SmsCouponProductCategoryRelation> categoryRelationList;
 }

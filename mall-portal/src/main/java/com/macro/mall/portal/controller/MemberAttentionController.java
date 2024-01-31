@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 会员关注品牌管理Controller
+ * 회원들은 브랜드 관리 컨트롤러.
  * Created by macro on 2018/8/2.
  */
 @Controller
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class MemberAttentionController {
     @Autowired
     private MemberAttentionService memberAttentionService;
-    @ApiOperation("添加品牌关注")
+    @ApiOperation("添加品牌关注") //팔로잉 브랜드 추가
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult add(@RequestBody MemberBrandAttention memberBrandAttention) {
@@ -35,7 +35,7 @@ public class MemberAttentionController {
         }
     }
 
-    @ApiOperation("取消品牌关注")
+    @ApiOperation("取消品牌关注") //브랜드 언팔로우
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult delete(Long brandId) {
@@ -47,7 +47,7 @@ public class MemberAttentionController {
         }
     }
 
-    @ApiOperation("显示当前用户品牌关注列表")
+    @ApiOperation("显示当前用户品牌关注列表") //현재 사용자의 브랜드 관심 목록을 표시합니다.
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<CommonPage<MemberBrandAttention>> list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -56,7 +56,7 @@ public class MemberAttentionController {
         return CommonResult.success(CommonPage.restPage(page));
     }
 
-    @ApiOperation("显示品牌关注详情")
+    @ApiOperation("显示品牌关注详情") //브랜드 관리 세부정보 표시
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<MemberBrandAttention> detail(@RequestParam Long brandId) {
@@ -64,7 +64,7 @@ public class MemberAttentionController {
         return CommonResult.success(memberBrandAttention);
     }
 
-    @ApiOperation("清空当前用户品牌关注列表")
+    @ApiOperation("清空当前用户品牌关注列表") //현재 사용자의 브랜드 관심 목록 지우기
     @RequestMapping(value = "/clear", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult clear() {

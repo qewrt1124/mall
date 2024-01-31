@@ -7,20 +7,20 @@ import java.util.Date;
 public class CmsMemberReport implements Serializable {
     private Long id;
 
-    @ApiModelProperty(value = "举报类型：0->商品评价；1->话题内容；2->用户评论")
+    @ApiModelProperty(value = "举报类型：0->商品评价；1->话题内容；2->用户评论") //보고서 유형: 상품평 0->개, 주제 콘텐츠 1->개, 사용자 리뷰 2->개
     private Integer reportType;
 
-    @ApiModelProperty(value = "举报人")
+    @ApiModelProperty(value = "举报人") //내부 고발자
     private String reportMemberName;
 
     private Date createTime;
 
     private String reportObject;
 
-    @ApiModelProperty(value = "举报状态：0->未处理；1->已处理")
+    @ApiModelProperty(value = "举报状态：0->未处理；1->已处理") //보고서 상태: 0-> 처리되지 않음, 1-> 처리됨
     private Integer reportStatus;
 
-    @ApiModelProperty(value = "处理结果：0->无效；1->有效；2->恶意")
+    @ApiModelProperty(value = "处理结果：0->无效；1->有效；2->恶意") //결과 : 0-> 유효하지 않음, 1-> 유효, 2-> 악성
     private Integer handleStatus;
 
     private String note;

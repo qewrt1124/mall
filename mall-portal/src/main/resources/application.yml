@@ -13,14 +13,14 @@ mybatis:
     - classpath*:com/**/mapper/*.xml
 
 jwt:
-  tokenHeader: Authorization #JWT存储的请求头
-  secret: mall-portal-secret #JWT加解密使用的密钥
-  expiration: 604800 #JWT的超期限时间(60*60*24*7)
-  tokenHead: 'Bearer '  #JWT负载中拿到开头
+  tokenHeader: Authorization #JWT 저장된 요청 헤더
+  secret: mall-portal-secret #JWT에서 암호화 및 암호 해독에 사용하는 키
+  expiration: 604800 #JWT 만료 시간(60*60*24*7)
+  tokenHead: 'Bearer '  #시작을 위한 JWT 로드
 
 secure:
   ignored:
-    urls: #安全路径白名单
+    urls: #안전 경로 화이트리스트
       - /swagger-ui/
       - /swagger-resources/**
       - /**/v2/api-docs
@@ -37,7 +37,7 @@ secure:
       - /product/**
       - /brand/**
 
-# 自定义redis key
+# Redis 키 사용자 지정
 redis:
   database: mall
   key:
@@ -45,14 +45,14 @@ redis:
     orderId: 'oms:orderId'
     member: 'ums:member'
   expire:
-    authCode: 90 # 验证码超期时间
-    common: 86400 # 24小时
+    authCode: 90 # 인증 코드 만료 기간
+    common: 86400 # 24시간
 
 mongo:
   insert:
-    sqlEnable: true # 用于控制是否通过数据库数据来插入mongo
+    sqlEnable: true # mongo가 데이터베이스 데이터에서 삽입되는지 여부를 제어하는 데 사용됩니다.
 
-# 消息队列定义
+# 메시지 큐 정의
 rabbitmq:
   queue:
     name:

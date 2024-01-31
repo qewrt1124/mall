@@ -20,7 +20,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
- * 会员优惠券管理Service实现类
+ * 제휴 쿠폰 관리 서비스 구현 수업
  * Created by macro on 2018/8/29.
  */
 @Service
@@ -42,7 +42,7 @@ public class UmsMemberCouponServiceImpl implements UmsMemberCouponService {
     @Override
     public void add(Long couponId) {
         UmsMember currentMember = memberService.getCurrentMember();
-        //获取优惠券信息，判断数量
+        //쿠폰 정보 확인 및 수량 판단
         SmsCoupon coupon = couponMapper.selectByPrimaryKey(couponId);
         if(coupon==null){
             Asserts.fail("优惠券不存在");
@@ -54,33 +54,33 @@ public class UmsMemberCouponServiceImpl implements UmsMemberCouponService {
         if(now.before(coupon.getEnableTime())){
             Asserts.fail("优惠券还没到领取时间");
         }
-        //判断用户领取的优惠券数量是否超过限制
+        //사용자가 수집한 쿠폰 수가 한도를 초과하는지 여부 확인
         SmsCouponHistoryExample couponHistoryExample = new SmsCouponHistoryExample();
         couponHistoryExample.createCriteria().andCouponIdEqualTo(couponId).andMemberIdEqualTo(currentMember.getId());
         long count = couponHistoryMapper.countByExample(couponHistoryExample);
         if(count>=coupon.getPerLimit()){
             Asserts.fail("您已经领取过该优惠券");
         }
-        //生成领取优惠券历史
+        //쿠폰 수집 내역 생성
         SmsCouponHistory couponHistory = new SmsCouponHistory();
         couponHistory.setCouponId(couponId);
         couponHistory.setCouponCode(generateCouponCode(currentMember.getId()));
         couponHistory.setCreateTime(now);
         couponHistory.setMemberId(currentMember.getId());
         couponHistory.setMemberNickname(currentMember.getNickname());
-        //主动领取
+        //주도권을 잡고 주장하십시오
         couponHistory.setGetType(1);
-        //未使用
+        //하지 않는
         couponHistory.setUseStatus(0);
         couponHistoryMapper.insert(couponHistory);
-        //修改优惠券表的数量、领取数量
+        //쿠폰 시트 수와 받을 쿠폰 수를 수정합니다
         coupon.setCount(coupon.getCount()-1);
         coupon.setReceiveCount(coupon.getReceiveCount()==null?1:coupon.getReceiveCount()+1);
         couponMapper.updateByPrimaryKey(coupon);
     }
 
     /**
-     * 16位优惠码生成：时间戳后8位+4位随机数+用户id后4位
+     * 16자리 쿠폰 코드 생성 : 타임스탬프 뒤 8자리 + 난수 4자리 + 사용자 ID 뒤 4자리
      */
     private String generateCouponCode(Long memberId) {
         StringBuilder sb = new StringBuilder();
@@ -115,9 +115,9 @@ public class UmsMemberCouponServiceImpl implements UmsMemberCouponService {
     public List<SmsCouponHistoryDetail> listCart(List<CartPromotionItem> cartItemList, Integer type) {
         UmsMember currentMember = memberService.getCurrentMember();
         Date now = new Date();
-        //获取该用户所有优惠券
+        //해당 사용자에 대한 모든 쿠폰 받기
         List<SmsCouponHistoryDetail> allList = couponHistoryDao.getDetailList(currentMember.getId());
-        //根据优惠券使用类型来判断优惠券是否可用
+        //쿠폰 사용 유형에 따라 쿠폰을 사용할 수 있는지 여부 결정
         List<SmsCouponHistoryDetail> enableList = new ArrayList<>();
         List<SmsCouponHistoryDetail> disableList = new ArrayList<>();
         for (SmsCouponHistoryDetail couponHistoryDetail : allList) {
@@ -125,9 +125,9 @@ public class UmsMemberCouponServiceImpl implements UmsMemberCouponService {
             BigDecimal minPoint = couponHistoryDetail.getCoupon().getMinPoint();
             Date endTime = couponHistoryDetail.getCoupon().getEndTime();
             if(useType.equals(0)){
-                //0->全场通用
-                //判断是否满足优惠起点
-                //计算购物车商品的总价
+                //0->는 모든 방문자에게 공통입니다.
+                //제안의 시작점이 충족되는지 확인
+                //장바구니에 있는 품목의 총 가격 계산
                 BigDecimal totalAmount = calcTotalAmount(cartItemList);
                 if(now.before(endTime)&&totalAmount.subtract(minPoint).intValue()>=0){
                     enableList.add(couponHistoryDetail);
@@ -135,8 +135,8 @@ public class UmsMemberCouponServiceImpl implements UmsMemberCouponService {
                     disableList.add(couponHistoryDetail);
                 }
             }else if(useType.equals(1)){
-                //1->指定分类
-                //计算指定分类商品的总价
+                //1-> 분류 지정
+                //주어진 카테고리에 있는 제품의 총 가격 계산
                 List<Long> productCategoryIds = new ArrayList<>();
                 for (SmsCouponProductCategoryRelation categoryRelation : couponHistoryDetail.getCategoryRelationList()) {
                     productCategoryIds.add(categoryRelation.getProductCategoryId());
@@ -148,8 +148,8 @@ public class UmsMemberCouponServiceImpl implements UmsMemberCouponService {
                     disableList.add(couponHistoryDetail);
                 }
             }else if(useType.equals(2)){
-                //2->指定商品
-                //计算指定商品的总价
+                //2-> 지정 제품
+                //지정된 제품의 총 가격 계산
                 List<Long> productIds = new ArrayList<>();
                 for (SmsCouponProductRelation productRelation : couponHistoryDetail.getProductRelationList()) {
                     productIds.add(productRelation.getProductId());
@@ -172,7 +172,7 @@ public class UmsMemberCouponServiceImpl implements UmsMemberCouponService {
     @Override
     public List<SmsCoupon> listByProduct(Long productId) {
         List<Long> allCouponIds = new ArrayList<>();
-        //获取指定商品优惠券
+        //지정된 품목에 대한 쿠폰 받기
         SmsCouponProductRelationExample cprExample = new SmsCouponProductRelationExample();
         cprExample.createCriteria().andProductIdEqualTo(productId);
         List<SmsCouponProductRelation> cprList = couponProductRelationMapper.selectByExample(cprExample);
@@ -180,7 +180,7 @@ public class UmsMemberCouponServiceImpl implements UmsMemberCouponService {
             List<Long> couponIds = cprList.stream().map(SmsCouponProductRelation::getCouponId).collect(Collectors.toList());
             allCouponIds.addAll(couponIds);
         }
-        //获取指定分类优惠券
+        //특정 카테고리에 대한 쿠폰 받기
         PmsProduct product = productMapper.selectByPrimaryKey(productId);
         SmsCouponProductCategoryRelationExample cpcrExample = new SmsCouponProductCategoryRelationExample();
         cpcrExample.createCriteria().andProductCategoryIdEqualTo(product.getProductCategoryId());
@@ -189,7 +189,7 @@ public class UmsMemberCouponServiceImpl implements UmsMemberCouponService {
             List<Long> couponIds = cpcrList.stream().map(SmsCouponProductCategoryRelation::getCouponId).collect(Collectors.toList());
             allCouponIds.addAll(couponIds);
         }
-        //所有优惠券
+        //모든 쿠폰
         SmsCouponExample couponExample = new SmsCouponExample();
         couponExample.createCriteria().andEndTimeGreaterThan(new Date())
                 .andStartTimeLessThan(new Date())

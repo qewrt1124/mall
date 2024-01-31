@@ -15,13 +15,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * JwtToken生成的工具类
- * JWT token的格式：header.payload.signature
- * header的格式（算法、token的类型）：
+ * JWT 토큰에 의해 생성된 유틸리티 클래스
+ * JWT 토큰의 형식：header.payload.signature
+ * 헤더 형식(알고리즘, 토큰 유형):
  * {"alg": "HS512","typ": "JWT"}
- * payload的格式（用户名、创建时间、生成时间）：
+ * 페이로드 형식(사용자 이름, 생성 시간, 생성 시간):
  * {"sub":"wang","created":1489079981393,"exp":1489684781}
- * signature的生成算法：
+ * signature 생성 알고리즘의：
  * HMACSHA512(base64UrlEncode(header) + "." +base64UrlEncode(payload),secret)
  * Created by macro on 2018/4/26.
  */
@@ -37,7 +37,7 @@ public class JwtTokenUtil {
     private String tokenHead;
 
     /**
-     * 根据负责生成JWT的token
+     * JWT 생성을 담당하는 토큰에 따르면
      */
     private String generateToken(Map<String, Object> claims) {
         return Jwts.builder()
@@ -48,7 +48,7 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 从token中获取JWT中的负载
+     * 토큰에서 JWT의 페이로드 가져오기
      */
     private Claims getClaimsFromToken(String token) {
         Claims claims = null;
@@ -64,14 +64,14 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 生成token的过期时间
+     * 생성된 토큰의 만료 시간
      */
     private Date generateExpirationDate() {
         return new Date(System.currentTimeMillis() + expiration * 1000);
     }
 
     /**
-     * 从token中获取登录用户名
+     * 토큰에서 로그인 사용자 이름 가져오기
      */
     public String getUserNameFromToken(String token) {
         String username;
@@ -85,7 +85,7 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 验证token是否还有效
+     * 토큰이 여전히 유효한지 확인
      *
      * @param token       客户端传入的token
      * @param userDetails 从数据库中查询出来的用户信息
@@ -96,7 +96,7 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 判断token是否已经失效
+     * 토큰이 만료되었는지 확인
      */
     private boolean isTokenExpired(String token) {
         Date expiredDate = getExpiredDateFromToken(token);
@@ -104,7 +104,7 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 从token中获取过期时间
+     * 토큰에서 만료 시간 가져오기
      */
     private Date getExpiredDateFromToken(String token) {
         Claims claims = getClaimsFromToken(token);
@@ -112,7 +112,7 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 根据用户信息生成token
+     * 사용자 정보를 기반으로 토큰 생성
      */
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
@@ -122,9 +122,9 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 当原来的token没过期时是可以刷新的
+     * 원래 토큰이 만료되지 않은 경우 새로 고칠 수 있습니다
      *
-     * @param oldToken 带tokenHead的token
+     * @param oldToken 토큰 헤드 포함 token
      */
     public String refreshHeadToken(String oldToken) {
         if(StrUtil.isEmpty(oldToken)){
@@ -134,16 +134,16 @@ public class JwtTokenUtil {
         if(StrUtil.isEmpty(token)){
             return null;
         }
-        //token校验不通过
+        //토큰 확인에 실패합니다.
         Claims claims = getClaimsFromToken(token);
         if(claims==null){
             return null;
         }
-        //如果token已经过期，不支持刷新
+        //토큰이 만료된 경우 새로 고칠 수 없습니다
         if(isTokenExpired(token)){
             return null;
         }
-        //如果token在30分钟之内刚刷新过，返回原token
+        //토큰이 30분 이내에 새로 고쳐지면 원래 토큰이 반환됩니다
         if(tokenRefreshJustBefore(token,30*60)){
             return token;
         }else{
@@ -153,15 +153,15 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 判断token在指定时间内是否刚刚刷新过
-     * @param token 原token
-     * @param time 指定时间（秒）
+     * 지정된 시간 내에 토큰이 새로 고쳐졌는지 확인합니다
+     * @param token 원본 토큰
+     * @param time 시간(초)을 지정합니다.
      */
     private boolean tokenRefreshJustBefore(String token, int time) {
         Claims claims = getClaimsFromToken(token);
         Date created = claims.get(CLAIM_KEY_CREATED, Date.class);
         Date refreshDate = new Date();
-        //刷新时间在创建时间的指定时间内
+        //새로 고침 시간이 생성 시간의 지정된 시간 내에 있습니다.
         if(refreshDate.after(created)&&refreshDate.before(DateUtil.offsetSecond(created,time))){
             return true;
         }

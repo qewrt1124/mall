@@ -6,14 +6,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 消息队列相关配置
+ * 메시지 큐 구성
  * Created by macro on 2018/9/14.
  */
 @Configuration
 public class RabbitMqConfig {
 
     /**
-     * 订单消息实际消费队列所绑定的交换机
+     * 큐에서 주문 메시지를 실제로 사용하는 스위치입니다
      */
     @Bean
     DirectExchange orderDirect() {
@@ -24,7 +24,7 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 订单延迟队列队列所绑定的交换机
+     * 주문 지연 대기열이 바인딩되는 스위치입니다
      */
     @Bean
     DirectExchange orderTtlDirect() {
@@ -35,7 +35,7 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 订单实际消费队列
+     * 주문이 실제로 소비된 대기열
      */
     @Bean
     public Queue orderQueue() {
@@ -43,7 +43,7 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 订单延迟队列（死信队列）
+     * 주문 지연 대기열(배달 못한 편지 대기열)
      */
     @Bean
     public Queue orderTtlQueue() {
@@ -55,7 +55,7 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 将订单队列绑定到交换机
+     * 주문 대기열을 스위치에 바인딩
      */
     @Bean
     Binding orderBinding(DirectExchange orderDirect,Queue orderQueue){
@@ -66,7 +66,7 @@ public class RabbitMqConfig {
     }
 
     /**
-     * 将订单延迟队列绑定到交换机
+     * 주문 지연 대기열을 스위치에 바인딩
      */
     @Bean
     Binding orderTtlBinding(DirectExchange orderTtlDirect,Queue orderTtlQueue){

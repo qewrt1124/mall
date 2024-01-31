@@ -13,18 +13,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 会员收货地址管理Controller
+ * 회원 배송지 관리 Controller
  * Created by macro on 2018/8/28.
  */
 @Controller
 @Api(tags = "UmsMemberReceiveAddressController")
-@Tag(name = "UmsMemberReceiveAddressController", description = "会员收货地址管理")
+@Tag(name = "UmsMemberReceiveAddressController", description = "会员收货地址管理") //회원 배송지 관리
 @RequestMapping("/member/address")
 public class UmsMemberReceiveAddressController {
     @Autowired
     private UmsMemberReceiveAddressService memberReceiveAddressService;
 
-    @ApiOperation("添加收货地址")
+    @ApiOperation("添加收货地址") //배송지 주소 추가
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult add(@RequestBody UmsMemberReceiveAddress address) {
@@ -35,7 +35,7 @@ public class UmsMemberReceiveAddressController {
         return CommonResult.failed();
     }
 
-    @ApiOperation("删除收货地址")
+    @ApiOperation("删除收货地址") //배송지 주소 삭제
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult delete(@PathVariable Long id) {
@@ -46,7 +46,7 @@ public class UmsMemberReceiveAddressController {
         return CommonResult.failed();
     }
 
-    @ApiOperation("修改收货地址")
+    @ApiOperation("修改收货地址") //배송지 주소 수정
     @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult update(@PathVariable Long id, @RequestBody UmsMemberReceiveAddress address) {
@@ -57,7 +57,7 @@ public class UmsMemberReceiveAddressController {
         return CommonResult.failed();
     }
 
-    @ApiOperation("显示所有收货地址")
+    @ApiOperation("显示所有收货地址") //모든 배송 주소를 표시합니다.
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<List<UmsMemberReceiveAddress>> list() {
@@ -65,7 +65,7 @@ public class UmsMemberReceiveAddressController {
         return CommonResult.success(addressList);
     }
 
-    @ApiOperation("获取收货地址详情")
+    @ApiOperation("获取收货地址详情") //배송지 세부 정보 가져오기
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<UmsMemberReceiveAddress> getItem(@PathVariable Long id) {

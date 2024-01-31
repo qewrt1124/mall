@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Swagger基础配置
+ * Swagger 기본 구성
  * Created by macro on 2020/7/16.
  */
 public abstract class BaseSwaggerConfig {
@@ -115,7 +115,7 @@ public abstract class BaseSwaggerConfig {
     }
 
     /**
-     * 自定义Swagger配置
+     * 사용자 정의 Swagger 구성
      */
     public abstract SwaggerProperties swaggerProperties();
 }

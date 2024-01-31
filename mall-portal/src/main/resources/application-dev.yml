@@ -7,12 +7,12 @@ spring:
     username: root
     password: root
     druid:
-      initial-size: 5 #连接池初始化大小
-      min-idle: 10 #最小空闲连接数
-      max-active: 20 #最大连接数
+      initial-size: 5 #연결 풀 초기화 크기
+      min-idle: 10 #최소 유휴 연결 수
+      max-active: 20 #최대 연결 수
       web-stat-filter:
-        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #不统计这些请求数据
-      stat-view-servlet: #访问监控网页的登录用户名和密码
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #이러한 요청 데이터는 계산되지 않습니다
+      stat-view-servlet: #모니터링되는 웹 페이지에 액세스하기 위한 로그인 사용자 이름 및 암호
         login-username: druid
         login-password: druid
   data:
@@ -21,11 +21,11 @@ spring:
       port: 27017
       database: mall-port
   redis:
-    host: localhost # Redis服务器地址
-    database: 0 # Redis数据库索引（默认为0）
-    port: 6379 # Redis服务器连接端口
-    password: # Redis服务器连接密码（默认为空）
-    timeout: 300ms # 连接超时时间（毫秒）
+    host: localhost # Redis Server의 주소
+    database: 0 # Redis 데이터베이스 인덱스(기본값은 0)
+    port: 6379 # Redis Server가 연결된 포트입니다
+    password: # Redis 서버 연결 암호(기본적으로 비어 있음)
+    timeout: 300ms # 연결 제한 시간(ms)
   rabbitmq:
     host: localhost
     port: 5672

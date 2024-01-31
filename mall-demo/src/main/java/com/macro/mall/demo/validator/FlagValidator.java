@@ -5,7 +5,7 @@ import javax.validation.Payload;
 import java.lang.annotation.*;
 
 /**
- * 用户验证状态是否在指定范围内的注解
+ * 사용자가 상태가 지정된 범위 내에 있는지 확인합니다
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)

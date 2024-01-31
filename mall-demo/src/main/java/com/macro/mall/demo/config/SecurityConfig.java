@@ -19,7 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.List;
 
 /**
- * SpringSecurity相关配置
+ * 스프링 시큐리티 관련 구성
  * Created by macro on 2018/4/26.
  */
 @Configuration
@@ -30,28 +30,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()//配置权限
-//                .antMatchers("/").access("hasRole('TEST')")//该路径需要TEST角色
-//                .antMatchers("/brand/list").hasAuthority("TEST")//该路径需要TEST权限
+        http.authorizeRequests()//권한 구성
+//                .antMatchers("/").access("hasRole('TEST')")//이 경로에는 TEST 역할이 필요합니다.
+//                .antMatchers("/brand/list").hasAuthority("TEST")//이 경로에는 TEST 권한이 필요합니다.
                 .antMatchers("/**").permitAll()
-                .and()//启用基于http的认证
+                .and()//http 기반 인증 활성화
                 .httpBasic()
                 .realmName("/")
-                .and()//配置登录页面
+                .and()//로그인 페이지 구성
                 .formLogin()
                 .loginPage("/login")
                 .failureUrl("/login?error=true")
-                .and()//配置退出路径
+                .and()//종료 경로 구성
                 .logout()
                 .logoutSuccessUrl("/")
-//                .and()//记住密码功能
+//                .and()//비밀번호 기억 기능
 //                .rememberMe()
 //                .tokenValiditySeconds(60*60*24)
 //                .key("rememberMeKey")
-                .and()//关闭跨域伪造
+                .and()//도메인 간 위조 끄기
                 .csrf()
                 .disable()
-                .headers()//去除X-Frame-Options
+                .headers()//X 제거-Frame-Options
                 .frameOptions()
                 .disable();
     }
@@ -63,7 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        //获取登录用户信息
+        //로그인한 사용자 정보 가져오기
         return new UserDetailsService() {
             @Override
             public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -73,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 if (umsAdminList != null && umsAdminList.size() > 0) {
                     return new AdminUserDetails(umsAdminList.get(0));
                 }
-                throw new UsernameNotFoundException("用户名或密码错误");
+                throw new UsernameNotFoundException("用户名或密码错误"); //잘못된 사용자 이름 또는 비밀번호
             }
         };
     }

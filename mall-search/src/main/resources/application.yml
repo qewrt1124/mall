@@ -2,7 +2,7 @@ spring:
   application:
     name: mall-search
   profiles:
-    active: dev #默认为开发环境
+    active: dev #기본값은 개발 환경입니다
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

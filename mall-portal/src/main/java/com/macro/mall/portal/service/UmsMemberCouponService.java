@@ -9,33 +9,33 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * 用户优惠券管理Service
+ * 사용자 쿠폰 관리 Service
  * Created by macro on 2018/8/29.
  */
 public interface UmsMemberCouponService {
     /**
-     * 会员添加优惠券
+     * 회원이 쿠폰을 추가합니다
      */
     @Transactional
     void add(Long couponId);
 
     /**
-     * 获取优惠券历史列表
+     * 쿠폰 내역 목록 가져오기
      */
     List<SmsCouponHistory> listHistory(Integer useStatus);
 
     /**
-     * 根据购物车信息获取可用优惠券
+     * 장바구니 정보를 기반으로 사용 가능한 쿠폰 받기
      */
     List<SmsCouponHistoryDetail> listCart(List<CartPromotionItem> cartItemList, Integer type);
 
     /**
-     * 获取当前商品相关优惠券
+     * 현재 제품에 대한 쿠폰 받기
      */
     List<SmsCoupon> listByProduct(Long productId);
 
     /**
-     * 获取用户优惠券列表
+     * 사용자 쿠폰 목록 가져오기
      */
     List<SmsCoupon> list(Integer useStatus);
 }

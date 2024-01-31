@@ -7,47 +7,47 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 /**
- * 搜索商品管理Service
+ * 제품 관리 검색 Service
  * Created by macro on 2018/6/19.
  */
 public interface EsProductService {
     /**
-     * 从数据库中导入所有商品到ES
+     * 데이터베이스의 모든 항목을 ES로 가져오기
      */
     int importAll();
 
     /**
-     * 根据id删除商品
+     * ID를 기준으로 항목 삭제
      */
     void delete(Long id);
 
     /**
-     * 根据id创建商品
+     * ID를 기반으로 제품 만들기
      */
     EsProduct create(Long id);
 
     /**
-     * 批量删除商品
+     * 대량으로 항목 삭제
      */
     void delete(List<Long> ids);
 
     /**
-     * 根据关键字搜索名称或者副标题
+     * 키워드를 기반으로 이름 또는 부제목 검색
      */
     Page<EsProduct> search(String keyword, Integer pageNum, Integer pageSize);
 
     /**
-     * 根据关键字搜索名称或者副标题复合查询
+     * 키워드를 기반으로 이름 또는 부제목으로 복합 검색어 검색Search for a compound query by name or subtitle based on keyword
      */
     Page<EsProduct> search(String keyword, Long brandId, Long productCategoryId, Integer pageNum, Integer pageSize,Integer sort);
 
     /**
-     * 根据商品id推荐相关商品
+     * 제품 ID를 기반으로 관련 제품 추천
      */
     Page<EsProduct> recommend(Long id, Integer pageNum, Integer pageSize);
 
     /**
-     * 获取搜索词相关品牌、分类、属性
+     * 검색어 관련 브랜드, 카테고리, 속성 가져오기
      */
     EsProductRelatedInfo searchRelatedInfo(String keyword);
 }

@@ -22,10 +22,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * RestTemplate示例Controller
+ * RestTemplate 본보기 Controller
  * Created by macro on 2018/9/17.
  */
-@Api(tags = "RestTemplateDemoController", description = "RestTemplate示例")
+@Api(tags = "RestTemplateDemoController", description = "RestTemplate 본보기")
 @Controller
 @RequestMapping("/template")
 public class RestTemplateDemoController {

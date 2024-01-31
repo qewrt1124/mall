@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 /**
- * 会员关注Service实现类
+ * 멤버 Service 구현 클래스
  * Created by macro on 2018/8/2.
  */
 @Service

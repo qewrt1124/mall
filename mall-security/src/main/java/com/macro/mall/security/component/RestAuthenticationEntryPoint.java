@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * 自定义未登录或者token失效时的返回结果
+ * 로그인하지 않았거나 토큰이 유효하지 않은 경우 반환 결과 사용자 지정
  * Created by macro on 2018/5/14.
  */
 public class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {

@@ -1,20 +1,20 @@
 package com.macro.mall.common.api;
 
 /**
- * 通用返回结果封装类
+ * 범용 반환 결과 캡슐화 클래스
  * Created by macro on 2019/4/19.
  */
 public class CommonResult<T> {
     /**
-     * 状态码
+     * 상태 코드
      */
     private long code;
     /**
-     * 提示信息
+     * 상태 코드
      */
     private String message;
     /**
-     * 数据封装
+     * 데이터 캡슐화
      */
     private T data;
 
@@ -28,36 +28,36 @@ public class CommonResult<T> {
     }
 
     /**
-     * 成功返回结果
+     * 결과를 성공적으로 반환했습니다.
      *
-     * @param data 获取的数据
+     * @param data 얻은 데이터
      */
     public static <T> CommonResult<T> success(T data) {
         return new CommonResult<T>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMessage(), data);
     }
 
     /**
-     * 成功返回结果
+     * 결과를 성공적으로 반환했습니다.
      *
-     * @param data 获取的数据
-     * @param  message 提示信息
+     * @param data 획득한 데이터
+     * @param  message 프롬프트 메시지
      */
     public static <T> CommonResult<T> success(T data, String message) {
         return new CommonResult<T>(ResultCode.SUCCESS.getCode(), message, data);
     }
 
     /**
-     * 失败返回结果
-     * @param errorCode 错误码
+     * 실패 시 결과 반환
+     * @param errorCode 에러 코드
      */
     public static <T> CommonResult<T> failed(IErrorCode errorCode) {
         return new CommonResult<T>(errorCode.getCode(), errorCode.getMessage(), null);
     }
 
     /**
-     * 失败返回结果
-     * @param errorCode 错误码
-     * @param message 错误信息
+     * 실패 시 결과 반환
+     * @param errorCode 에러 코드
+     * @param message 에러 메시지
      */
     public static <T> CommonResult<T> failed(IErrorCode errorCode,String message) {
         return new CommonResult<T>(errorCode.getCode(), message, null);
@@ -65,43 +65,43 @@ public class CommonResult<T> {
 
     /**
      * 失败返回结果
-     * @param message 提示信息
+     * @param message 프롬프트 메시지
      */
     public static <T> CommonResult<T> failed(String message) {
         return new CommonResult<T>(ResultCode.FAILED.getCode(), message, null);
     }
 
     /**
-     * 失败返回结果
+     * 실패 시 결과 반환
      */
     public static <T> CommonResult<T> failed() {
         return failed(ResultCode.FAILED);
     }
 
     /**
-     * 参数验证失败返回结果
+     * 매개변수 검증이 실패하면 결과를 반환합니다.
      */
     public static <T> CommonResult<T> validateFailed() {
         return failed(ResultCode.VALIDATE_FAILED);
     }
 
     /**
-     * 参数验证失败返回结果
-     * @param message 提示信息
+     * 매개변수 검증이 실패하면 결과를 반환합니다.
+     * @param message 프롬프트 메시지
      */
     public static <T> CommonResult<T> validateFailed(String message) {
         return new CommonResult<T>(ResultCode.VALIDATE_FAILED.getCode(), message, null);
     }
 
     /**
-     * 未登录返回结果
+     * 로그인하지 않음 결과 반환
      */
     public static <T> CommonResult<T> unauthorized(T data) {
         return new CommonResult<T>(ResultCode.UNAUTHORIZED.getCode(), ResultCode.UNAUTHORIZED.getMessage(), data);
     }
 
     /**
-     * 未授权返回结果
+     * 승인되지 않은 결과 반환
      */
     public static <T> CommonResult<T> forbidden(T data) {
         return new CommonResult<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);

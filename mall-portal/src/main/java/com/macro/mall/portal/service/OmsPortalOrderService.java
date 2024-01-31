@@ -10,61 +10,61 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 前台订单管理Service
+ * 프론트 데스크 주문 관리 Service
  * Created by macro on 2018/8/30.
  */
 public interface OmsPortalOrderService {
     /**
-     * 根据用户购物车信息生成确认单信息
+     * 사용자의 장바구니 정보를 기반으로 바우처 생성
      */
     ConfirmOrderResult generateConfirmOrder(List<Long> cartIds);
 
     /**
-     * 根据提交信息生成订单
+     * 제출 정보를 기반으로 주문 생성
      */
     @Transactional
     Map<String, Object> generateOrder(OrderParam orderParam);
 
     /**
-     * 支付成功后的回调
+     * 결제 성공 후 콜백
      */
     @Transactional
     Integer paySuccess(Long orderId, Integer payType);
 
     /**
-     * 自动取消超时订单
+     * 타임아웃 주문 자동 취소
      */
     @Transactional
     Integer cancelTimeOutOrder();
 
     /**
-     * 取消单个超时订单
+     * 단일 시간 초과 주문 취소
      */
     @Transactional
     void cancelOrder(Long orderId);
 
     /**
-     * 发送延迟消息取消订单
+     * 주문을 취소하기 위해 지연 메시지 보내기
      */
     void sendDelayMessageCancelOrder(Long orderId);
 
     /**
-     * 确认收货
+     * 영수증 확인
      */
     void confirmReceiveOrder(Long orderId);
 
     /**
-     * 分页获取用户订单
+     * 페이지 매김으로 사용자 주문 가져오기
      */
     CommonPage<OmsOrderDetail> list(Integer status, Integer pageNum, Integer pageSize);
 
     /**
-     * 根据订单ID获取订单详情
+     * 주문 ID를 기반으로 주문 세부 정보 가져오기
      */
     OmsOrderDetail detail(Long orderId);
 
     /**
-     * 用户根据订单ID删除订单
+     * 사용자가 주문 ID를 기준으로 주문을 삭제합니다
      */
     void deleteOrder(Long orderId);
 }

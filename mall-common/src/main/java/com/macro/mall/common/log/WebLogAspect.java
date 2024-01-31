@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 统一日志处理切面
+ * 통합된 로그 처리 측면
  * Created by macro on 2018/4/26.
  */
 @Aspect
@@ -91,7 +91,7 @@ public class WebLogAspect {
     }
 
     /**
-     * 根据方法和传入的参数获取请求参数
+     * 메소드 및 전달된 매개변수를 기반으로 요청 매개변수 가져오기
      */
     private Object getParameter(Method method, Object[] args) {
         List<Object> argList = new ArrayList<>();

@@ -4,12 +4,12 @@ spring:
     username: reader
     password: 123456
     druid:
-      initial-size: 5 #连接池初始化大小
-      min-idle: 10 #最小空闲连接数
-      max-active: 20 #最大连接数
+      initial-size: 5 #연결 풀 초기화 크기
+      min-idle: 10 #최소 유휴 연결 수
+      max-active: 20 #최대 연결 수
       web-stat-filter:
-        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #不统计这些请求数据
-      stat-view-servlet: #访问监控网页的登录用户名和密码
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*" #이러한 요청 데이터는 계산되지 않습니다
+      stat-view-servlet: #모니터링되는 웹 페이지에 액세스하기 위한 로그인 사용자 이름 및 암호
         login-username: druid
         login-password: druid
   data:

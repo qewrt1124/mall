@@ -6,7 +6,7 @@ import com.macro.mall.model.PmsBrand;
 import java.util.List;
 
 /**
- * DemoService接口
+ * DemoService 인터페이스
  * Created by macro on 2019/4/8.
  */
 public interface DemoService {

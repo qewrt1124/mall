@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * 会员管理Service实现类
+ * 구성원 관리 서비스 구현 클래스
  * Created by macro on 2018/8/3.
  */
 @Service
@@ -76,11 +76,11 @@ public class UmsMemberServiceImpl implements UmsMemberService {
 
     @Override
     public void register(String username, String password, String telephone, String authCode) {
-        //验证验证码
+        //인증 코드 확인
         if(!verifyAuthCode(authCode,telephone)){
             Asserts.fail("验证码错误");
         }
-        //查询是否已有该用户
+        //사용자가 존재하는지 확인
         UmsMemberExample example = new UmsMemberExample();
         example.createCriteria().andUsernameEqualTo(username);
         example.or(example.createCriteria().andPhoneEqualTo(telephone));
@@ -88,14 +88,14 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         if (!CollectionUtils.isEmpty(umsMembers)) {
             Asserts.fail("该用户已经存在");
         }
-        //没有该用户进行添加操作
+        //사용자를 추가한 사용자가 없습니다.
         UmsMember umsMember = new UmsMember();
         umsMember.setUsername(username);
         umsMember.setPhone(telephone);
         umsMember.setPassword(passwordEncoder.encode(password));
         umsMember.setCreateTime(new Date());
         umsMember.setStatus(1);
-        //获取默认会员等级并设置
+        //기본 멤버십 수준을 가져와서 설정합니다.
         UmsMemberLevelExample levelExample = new UmsMemberLevelExample();
         levelExample.createCriteria().andDefaultStatusEqualTo(1);
         List<UmsMemberLevel> memberLevelList = memberLevelMapper.selectByExample(levelExample);
@@ -123,11 +123,11 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         example.createCriteria().andPhoneEqualTo(telephone);
         List<UmsMember> memberList = memberMapper.selectByExample(example);
         if(CollectionUtils.isEmpty(memberList)){
-            Asserts.fail("该账号不存在");
+            Asserts.fail("该账号不存在"); //계정이 존재하지 않습니다.
         }
-        //验证验证码
+        //인증 코드 확인
         if(!verifyAuthCode(authCode,telephone)){
-            Asserts.fail("验证码错误");
+            Asserts.fail("验证码错误"); //인증 코드가 잘못되었습니다.
         }
         UmsMember umsMember = memberList.get(0);
         umsMember.setPassword(passwordEncoder.encode(password));
@@ -158,7 +158,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         if(member!=null){
             return new MemberDetails(member);
         }
-        throw new UsernameNotFoundException("用户名或密码错误");
+        throw new UsernameNotFoundException("用户名或密码错误"); //잘못된 사용자 이름 또는 비밀번호
     }
 
     @Override
@@ -168,13 +168,13 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         try {
             UserDetails userDetails = loadUserByUsername(username);
             if(!passwordEncoder.matches(password,userDetails.getPassword())){
-                throw new BadCredentialsException("密码不正确");
+                throw new BadCredentialsException("密码不正确"); //비밀번호가 잘못되었습니다.
             }
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
             token = jwtTokenUtil.generateToken(userDetails);
         } catch (AuthenticationException e) {
-            LOGGER.warn("登录异常:{}", e.getMessage());
+            LOGGER.warn("登录异常:{}", e.getMessage()); //로그인 예외: {}
         }
         return token;
     }
@@ -184,7 +184,7 @@ public class UmsMemberServiceImpl implements UmsMemberService {
         return jwtTokenUtil.refreshHeadToken(token);
     }
 
-    //对输入的验证码进行校验
+    //입력한 인증 코드 확인
     private boolean verifyAuthCode(String authCode, String telephone){
         if(StrUtil.isEmpty(authCode)){
             return false;

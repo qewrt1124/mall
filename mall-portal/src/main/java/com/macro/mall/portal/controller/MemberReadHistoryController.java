@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 会员商品浏览记录管理Controller
+ * 회원의 제품 검색 기록 관리 Controller
  * Created by macro on 2018/8/3.
  */
 @Controller
@@ -26,7 +26,7 @@ public class MemberReadHistoryController {
     @Autowired
     private MemberReadHistoryService memberReadHistoryService;
 
-    @ApiOperation("创建浏览记录")
+    @ApiOperation("创建浏览记录") //검색 기록 만들기
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult create(@RequestBody MemberReadHistory memberReadHistory) {
@@ -38,7 +38,7 @@ public class MemberReadHistoryController {
         }
     }
 
-    @ApiOperation("删除浏览记录")
+    @ApiOperation("删除浏览记录") //인터넷 사용 기록 삭제
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult delete(@RequestParam("ids") List<String> ids) {
@@ -50,7 +50,7 @@ public class MemberReadHistoryController {
         }
     }
 
-    @ApiOperation("清空浏览记录")
+    @ApiOperation("清空浏览记录") //인터넷 사용 기록 지우기
     @RequestMapping(value = "/clear", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult clear() {
@@ -58,7 +58,7 @@ public class MemberReadHistoryController {
         return CommonResult.success(null);
     }
 
-    @ApiOperation("分页获取浏览记录")
+    @ApiOperation("分页获取浏览记录") //검색 기록을 얻기 위해 페이지 매김
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<CommonPage<MemberReadHistory>> list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,

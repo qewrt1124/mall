@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * Swagger API文档相关配置
+ * Swagger API 설명서
  * Created by macro on 2018/4/26.
  */
 @Configuration
@@ -19,8 +19,8 @@ public class SwaggerConfig extends BaseSwaggerConfig {
     public SwaggerProperties swaggerProperties() {
         return SwaggerProperties.builder()
                 .apiBasePackage("com.macro.mall.demo.controller")
-                .title("mall-demo系统")
-                .description("SpringBoot版本中的一些示例")
+                .title("mall-demo系统") //mall-demo-system
+                .description("SpringBoot版本中的一些示例") //Spring Boot 릴리스의 몇 가지 예제
                 .contactName("macro")
                 .version("1.0")
                 .enableSecurity(true)

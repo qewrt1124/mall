@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 import java.util.*;
 
 /**
- * 动态权限数据源，用于获取动态权限规则
+ * 동적 사용 권한 규칙을 가져오는 데 사용되는 동적 사용 권한 데이터 원본
  * Created by macro on 2020/2/7.
  */
 public class DynamicSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
@@ -35,19 +35,19 @@ public class DynamicSecurityMetadataSource implements FilterInvocationSecurityMe
     public Collection<ConfigAttribute> getAttributes(Object o) throws IllegalArgumentException {
         if (configAttributeMap == null) this.loadDataSource();
         List<ConfigAttribute>  configAttributes = new ArrayList<>();
-        //获取当前访问的路径
+        //현재 방문에 대한 경로 가져오기
         String url = ((FilterInvocation) o).getRequestUrl();
         String path = URLUtil.getPath(url);
         PathMatcher pathMatcher = new AntPathMatcher();
         Iterator<String> iterator = configAttributeMap.keySet().iterator();
-        //获取访问该路径所需资源
+        //경로에 액세스하는 데 필요한 리소스 가져오기
         while (iterator.hasNext()) {
             String pattern = iterator.next();
             if (pathMatcher.match(pattern, path)) {
                 configAttributes.add(configAttributeMap.get(pattern));
             }
         }
-        // 未设置操作请求权限，返回空集合
+        // 작업 요청 권한이 설정되지 않은 경우 빈 컬렉션이 반환됩니다
         return configAttributes;
     }
 

@@ -8,40 +8,40 @@ import com.macro.mall.portal.domain.HomeContentResult;
 import java.util.List;
 
 /**
- * 首页内容管理Service
+ * 홈페이지 콘텐츠 관리 Service
  * Created by macro on 2019/1/28.
  */
 public interface HomeService {
 
     /**
-     * 获取首页内容
+     * 홈페이지 콘텐츠 가져오기
      */
     HomeContentResult content();
 
     /**
-     * 首页商品推荐
+     * 홈페이지 제품 추천
      */
     List<PmsProduct> recommendProductList(Integer pageSize, Integer pageNum);
 
     /**
-     * 获取商品分类
-     * @param parentId 0:获取一级分类；其他：获取指定二级分类
+     * 제품 범주 가져오기
+     * @param parentId 0: 첫 번째 수준 분류를 가져오고, 기타: 지정된 두 번째 수준 분류를 가져옵니다.
      */
     List<PmsProductCategory> getProductCateList(Long parentId);
 
     /**
-     * 根据专题分类分页获取专题
-     * @param cateId 专题分类id
+     * 페이지 매김으로 주제 범주별로 주제 가져오기
+     * @param cateId 주제별 범주 ID
      */
     List<CmsSubject> getSubjectList(Long cateId, Integer pageSize, Integer pageNum);
 
     /**
-     * 分页获取人气推荐商品
+     * 인기 있는 추천 제품을 얻기 위해 페이지를 매깁니다.
      */
     List<PmsProduct> hotProductList(Integer pageNum, Integer pageSize);
 
     /**
-     * 分页获取新品推荐商品
+     * 페이지를 매겨 새 제품 추천 받기
      */
     List<PmsProduct> newProductList(Integer pageNum, Integer pageSize);
 }

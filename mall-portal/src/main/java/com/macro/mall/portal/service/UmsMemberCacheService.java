@@ -3,32 +3,32 @@ package com.macro.mall.portal.service;
 import com.macro.mall.model.UmsMember;
 
 /**
- * 会员信息缓存业务类
+ * 회원 정보 캐싱 사업
  * Created by macro on 2020/3/14.
  */
 public interface UmsMemberCacheService {
     /**
-     * 删除会员用户缓存
+     * 구성원 사용자 캐시 삭제
      */
     void delMember(Long memberId);
 
     /**
-     * 获取会员用户缓存
+     * 구성원 사용자 캐시 가져오기
      */
     UmsMember getMember(String username);
 
     /**
-     * 设置会员用户缓存
+     * 구성원 사용자 캐싱 설정
      */
     void setMember(UmsMember member);
 
     /**
-     * 设置验证码
+     * 인증 코드 설정
      */
     void setAuthCode(String telephone, String authCode);
 
     /**
-     * 获取验证码
+     * 인증 코드 받기
      */
     String getAuthCode(String telephone);
 }

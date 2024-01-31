@@ -6,33 +6,33 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 /**
- * 通用分页数据封装类
+ * 범용 페이징 데이터 캡슐화 클래스
  * Created by macro on 2019/4/19.
  */
 public class CommonPage<T> {
     /**
-     * 当前页码
+     * 현재 페이지 번호
      */
     private Integer pageNum;
     /**
-     * 每页数量
+     * 페이지당 수량
      */
     private Integer pageSize;
     /**
-     * 总页数
+     * 총 페이지
      */
     private Integer totalPage;
     /**
-     * 总条数
+     * 총 항목 수
      */
     private Long total;
     /**
-     * 分页数据
+     * 페이지를 매긴 데이터
      */
     private List<T> list;
 
     /**
-     * 将PageHelper分页后的list转为分页信息
+     * PageHelper의 페이징 목록을 페이징 정보로 변환
      */
     public static <T> CommonPage<T> restPage(List<T> list) {
         CommonPage<T> result = new CommonPage<T>();
@@ -46,7 +46,7 @@ public class CommonPage<T> {
     }
 
     /**
-     * 将SpringData分页后的list转为分页信息
+     * SpringData 페이징 목록을 페이징 정보로 변환
      */
     public static <T> CommonPage<T> restPage(Page<T> pageInfo) {
         CommonPage<T> result = new CommonPage<T>();

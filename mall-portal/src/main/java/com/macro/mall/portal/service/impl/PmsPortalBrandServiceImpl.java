@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 前台品牌管理Service实现类
+ * 프론트 데스크 브랜드 관리 서비스 구현 클래스
  * Created by macro on 2020/5/15.
  */
 @Service

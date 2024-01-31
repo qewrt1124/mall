@@ -17,19 +17,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 前台商品管理Controller
+ * Frontian 제품 관리 Controller
  * Created by macro on 2020/4/6.
  */
 @Controller
 @Api(tags = "PmsPortalProductController")
-@Tag(name = "PmsPortalProductController", description = "前台商品管理")
+@Tag(name = "PmsPortalProductController", description = "前台商品管理") //Frontian 제품 관리
 @RequestMapping("/product")
 public class PmsPortalProductController {
 
     @Autowired
     private PmsPortalProductService portalProductService;
 
-    @ApiOperation(value = "综合搜索、筛选、排序")
+    @ApiOperation(value = "综合搜索、筛选、排序") //포괄적인 검색, 필터링, 정렬
+    //필드 정렬: 관련성 기준 0->, 신제품별 1->, 판매량 기준 2->, 낮은 가격에서 높은 가격까지 3-> 가격, 높은 가격에서 낮은 가격까지 4->
     @ApiImplicitParam(name = "sort", value = "排序字段:0->按相关度；1->按新品；2->按销量；3->价格从低到高；4->价格从高到低",
             defaultValue = "0", allowableValues = "0,1,2,3,4", paramType = "query", dataType = "integer")
     @RequestMapping(value = "/search", method = RequestMethod.GET)
@@ -44,7 +45,7 @@ public class PmsPortalProductController {
         return CommonResult.success(CommonPage.restPage(productList));
     }
 
-    @ApiOperation("以树形结构获取所有商品分类")
+    @ApiOperation("以树形结构获取所有商品分类") //모든 제품 범주를 트리 구조로 가져옵니다.
     @RequestMapping(value = "/categoryTreeList", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<List<PmsProductCategoryNode>> categoryTreeList() {
@@ -52,7 +53,7 @@ public class PmsPortalProductController {
         return CommonResult.success(list);
     }
 
-    @ApiOperation("获取前台商品详情")
+    @ApiOperation("获取前台商品详情") //포그라운드 스토어 세부 정보 가져오기
     @RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<PmsPortalProductDetail> detail(@PathVariable Long id) {

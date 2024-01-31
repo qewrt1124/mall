@@ -13,18 +13,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * 会员商品收藏管理Controller
+ * 회원 상품 수집 관리 Controller
  * Created by macro on 2018/8/2.
  */
 @Controller
 @Api(tags = "MemberCollectionController")
-@Tag(name = "MemberCollectionController",description = "会员收藏管理")
+@Tag(name = "MemberCollectionController",description = "会员收藏管理") //회원 컬렉션 관리
 @RequestMapping("/member/productCollection")
 public class MemberProductCollectionController {
     @Autowired
     private MemberCollectionService memberCollectionService;
 
-    @ApiOperation("添加商品收藏")
+    @ApiOperation("添加商品收藏") //제품 컬렉션 추가
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult add(@RequestBody MemberProductCollection productCollection) {
@@ -36,7 +36,7 @@ public class MemberProductCollectionController {
         }
     }
 
-    @ApiOperation("删除商品收藏")
+    @ApiOperation("删除商品收藏") //제품 컬렉션 삭제
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult delete(Long productId) {
@@ -48,7 +48,7 @@ public class MemberProductCollectionController {
         }
     }
 
-    @ApiOperation("显示当前用户商品收藏列表")
+    @ApiOperation("显示当前用户商品收藏列表") //현재 사용자의 제품 컬렉션 목록을 표시합니다
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<CommonPage<MemberProductCollection>> list(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum,
@@ -57,7 +57,7 @@ public class MemberProductCollectionController {
         return CommonResult.success(CommonPage.restPage(page));
     }
 
-    @ApiOperation("显示商品收藏详情")
+    @ApiOperation("显示商品收藏详情") //컬렉션의 세부 정보를 표시합니다
     @RequestMapping(value = "/detail", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<MemberProductCollection> detail(@RequestParam Long productId) {
@@ -65,7 +65,7 @@ public class MemberProductCollectionController {
         return CommonResult.success(memberProductCollection);
     }
 
-    @ApiOperation("清空当前用户商品收藏列表")
+    @ApiOperation("清空当前用户商品收藏列表") //현재 사용자의 제품 컬렉션 목록 지우기
     @RequestMapping(value = "/clear", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult clear() {

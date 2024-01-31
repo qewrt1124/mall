@@ -7,7 +7,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 
 /**
- * 退货申请请求参数
+ * 반품 요청 요청 매개 변수
  * Created by macro on 2018/10/17.
  */
 @Getter
@@ -43,7 +43,7 @@ public class OmsOrderReturnApplyParam {
     private String reason;
     @ApiModelProperty("描述")
     private String description;
-    @ApiModelProperty("凭证图片，以逗号隔开")
+    @ApiModelProperty("凭证图片，以逗号隔开") //쉼표로 구분된 바우처 사진
     private String proofPics;
 
 }

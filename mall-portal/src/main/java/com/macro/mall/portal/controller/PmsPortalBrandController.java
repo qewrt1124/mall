@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * 首页品牌推荐管理Controller
+ * 홈페이지 브랜드 추천 관리 Controller
  * Created by macro on 2020/5/15.
  */
 @Controller
 @Api(tags = "PmsPortalBrandController")
-@Tag(name = "PmsPortalBrandController", description = "前台品牌管理")
+@Tag(name = "PmsPortalBrandController", description = "前台品牌管理") //프론트 데스크 브랜드 관리
 @RequestMapping("/brand")
 public class PmsPortalBrandController {
 
     @Autowired
     private PmsPortalBrandService portalBrandService;
 
-    @ApiOperation("分页获取推荐品牌")
+    @ApiOperation("分页获取推荐品牌") //추천 브랜드를 얻기 위해 페이지 매김
     @RequestMapping(value = "/recommendList", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<List<PmsBrand>> recommendList(@RequestParam(value = "pageSize", defaultValue = "6") Integer pageSize,
@@ -36,7 +36,7 @@ public class PmsPortalBrandController {
         return CommonResult.success(brandList);
     }
 
-    @ApiOperation("获取品牌详情")
+    @ApiOperation("获取品牌详情") //브랜드 세부 정보 보기
     @RequestMapping(value = "/detail/{brandId}", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<PmsBrand> detail(@PathVariable Long brandId) {
@@ -44,7 +44,7 @@ public class PmsPortalBrandController {
         return CommonResult.success(brand);
     }
 
-    @ApiOperation("分页获取品牌相关商品")
+    @ApiOperation("分页获取品牌相关商品") //브랜드 관련 제품에 대한 페이지 매김
     @RequestMapping(value = "/productList", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<CommonPage<PmsProduct>> productList(@RequestParam Long brandId,

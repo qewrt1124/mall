@@ -6,27 +6,27 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 /**
- * 会员浏览记录管理Service
+ * 회원 검색 기록 관리 Service
  * Created by macro on 2018/8/3.
  */
 public interface MemberReadHistoryService {
     /**
-     * 生成浏览记录
+     * 검색 기록 생성
      */
     int create(MemberReadHistory memberReadHistory);
 
     /**
-     * 批量删除浏览记录
+     * 인터넷 사용 기록을 대량으로 삭제
      */
     int delete(List<String> ids);
 
     /**
-     * 分页获取用户浏览历史记录
+     * 페이지 매김에서 사용자의 검색 기록 가져오기
      */
     Page<MemberReadHistory> list(Integer pageNum, Integer pageSize);
 
     /**
-     * 清空浏览记录
+     * 인터넷 사용 기록 지우기
      */
     void clear();
 }

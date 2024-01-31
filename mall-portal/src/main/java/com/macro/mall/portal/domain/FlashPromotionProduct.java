@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.math.BigDecimal;
 
 /**
- * 秒杀信息和商品对象封装
+ * 플래시 판매 정보 및 제품 개체 캡슐화
  * Created by macro on 2019/1/28.
  */
 @Getter

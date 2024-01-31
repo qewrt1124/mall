@@ -18,18 +18,18 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 订单管理Controller
+ * 주문 관리 Controller
  * Created by macro on 2018/8/30.
  */
 @Controller
 @Api(tags = "OmsPortalOrderController")
-@Tag(name = "OmsPortalOrderController", description = "订单管理")
+@Tag(name = "OmsPortalOrderController", description = "订单管理") //주문 관리
 @RequestMapping("/order")
 public class OmsPortalOrderController {
     @Autowired
     private OmsPortalOrderService portalOrderService;
 
-    @ApiOperation("根据购物车信息生成确认单")
+    @ApiOperation("根据购物车信息生成确认单") //장바구니 정보를 기반으로 확인 생성
     @RequestMapping(value = "/generateConfirmOrder", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult<ConfirmOrderResult> generateConfirmOrder(@RequestBody List<Long> cartIds) {
@@ -37,23 +37,23 @@ public class OmsPortalOrderController {
         return CommonResult.success(confirmOrderResult);
     }
 
-    @ApiOperation("根据购物车信息生成订单")
+    @ApiOperation("根据购物车信息生成订单") //장바구니 정보를 기반으로 주문 생성
     @RequestMapping(value = "/generateOrder", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult generateOrder(@RequestBody OrderParam orderParam) {
         Map<String, Object> result = portalOrderService.generateOrder(orderParam);
-        return CommonResult.success(result, "下单成功");
+        return CommonResult.success(result, "下单成功"); //주문이 성공적으로 완료되었습니다.
     }
 
-    @ApiOperation("用户支付成功的回调")
+    @ApiOperation("用户支付成功的回调") //사용자의 성공적인 결제에 대한 콜백
     @RequestMapping(value = "/paySuccess", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult paySuccess(@RequestParam Long orderId,@RequestParam Integer payType) {
         Integer count = portalOrderService.paySuccess(orderId,payType);
-        return CommonResult.success(count, "支付成功");
+        return CommonResult.success(count, "支付成功"); //결제가 완료되었습니다.
     }
 
-    @ApiOperation("自动取消超时订单")
+    @ApiOperation("自动取消超时订单") //타임아웃 주문 자동 취소
     @RequestMapping(value = "/cancelTimeOutOrder", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult cancelTimeOutOrder() {
@@ -61,7 +61,7 @@ public class OmsPortalOrderController {
         return CommonResult.success(null);
     }
 
-    @ApiOperation("取消单个超时订单")
+    @ApiOperation("取消单个超时订单") //단일 시간 초과 주문 취소
     @RequestMapping(value = "/cancelOrder", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult cancelOrder(Long orderId) {
@@ -69,7 +69,8 @@ public class OmsPortalOrderController {
         return CommonResult.success(null);
     }
 
-    @ApiOperation("按状态分页获取用户订单列表")
+    @ApiOperation("按状态分页获取用户订单列表") //상태별로 페이지를 매겨 사용자 주문 목록 가져오기
+    // 주문 상태: -1-> 전체, 0-> 결제 보류 중, 1-> 배송 대기 중, 2-> 배송됨, 3-> 완료, 4-> 마감
     @ApiImplicitParam(name = "status", value = "订单状态：-1->全部；0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭",
             defaultValue = "-1", allowableValues = "-1,0,1,2,3,4", paramType = "query", dataType = "int")
     @RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -81,7 +82,7 @@ public class OmsPortalOrderController {
         return CommonResult.success(orderPage);
     }
 
-    @ApiOperation("根据ID获取订单详情")
+    @ApiOperation("根据ID获取订单详情") //ID를 기반으로 주문 세부 정보 가져오기
     @RequestMapping(value = "/detail/{orderId}", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<OmsOrderDetail> detail(@PathVariable Long orderId) {
@@ -89,7 +90,7 @@ public class OmsPortalOrderController {
         return CommonResult.success(orderDetail);
     }
 
-    @ApiOperation("用户取消订单")
+    @ApiOperation("用户取消订单") //사용자가 주문을 취소합니다.
     @RequestMapping(value = "/cancelUserOrder", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult cancelUserOrder(Long orderId) {
@@ -97,7 +98,7 @@ public class OmsPortalOrderController {
         return CommonResult.success(null);
     }
 
-    @ApiOperation("用户确认收货")
+    @ApiOperation("用户确认收货") //사용자가 영수증을 확인합니다.
     @RequestMapping(value = "/confirmReceiveOrder", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult confirmReceiveOrder(Long orderId) {
@@ -105,7 +106,7 @@ public class OmsPortalOrderController {
         return CommonResult.success(null);
     }
 
-    @ApiOperation("用户删除订单")
+    @ApiOperation("用户删除订单") //사용자가 주문을 삭제합니다.
     @RequestMapping(value = "/deleteOrder", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult deleteOrder(Long orderId) {

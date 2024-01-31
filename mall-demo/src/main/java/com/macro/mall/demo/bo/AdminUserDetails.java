@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
- * SpringSecurity需要的用户详情
+ * Spring Security에 필요한 사용자 세부 정보
  * Created by macro on 2018/4/26.
  */
 public class AdminUserDetails implements UserDetails {

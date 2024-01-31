@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.sql.SQLSyntaxErrorException;
 
 /**
- * 全局异常处理类
+ * 전역 예외 처리 클래스
  * Created by macro on 2020/2/27.
  */
 @ControllerAdvice

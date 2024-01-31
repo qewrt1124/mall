@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * 搜索商品的信息
+ * 제품에 대한 정보 검색
  * Created by macro on 2018/6/19.
  */
 @Data

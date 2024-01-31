@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 会员浏览记录管理Service实现类
+ * 구성원 열람 기록 관리 서비스 구현 클래스
  * Created by macro on 2018/8/3.
  */
 @Service

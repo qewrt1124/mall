@@ -13,7 +13,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 
 /**
- * 用户地址管理Service实现类
+ * 사용자 주소 관리 서비스 구현 클래스
  * Created by macro on 2018/8/28.
  */
 @Service
@@ -47,7 +47,7 @@ public class UmsMemberReceiveAddressServiceImpl implements UmsMemberReceiveAddre
             address.setDefaultStatus(0);
         }
         if(address.getDefaultStatus()==1){
-            //先将原来的默认地址去除
+            //원래 기본 주소 제거
             UmsMemberReceiveAddress record= new UmsMemberReceiveAddress();
             record.setDefaultStatus(0);
             UmsMemberReceiveAddressExample updateExample = new UmsMemberReceiveAddressExample();

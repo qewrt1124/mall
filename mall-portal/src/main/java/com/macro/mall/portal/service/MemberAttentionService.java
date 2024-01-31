@@ -4,32 +4,32 @@ import com.macro.mall.portal.domain.MemberBrandAttention;
 import org.springframework.data.domain.Page;
 
 /**
- * 会员品牌关注管理Service
+ * 멤버십 브랜드는 관리에 중점을 둡니다. Service
  * Created by macro on 2018/8/2.
  */
 public interface MemberAttentionService {
     /**
-     * 添加关注
+     * 팔로우 추가
      */
     int add(MemberBrandAttention memberBrandAttention);
 
     /**
-     * 取消关注
+     * 언팔로우
      */
     int delete(Long brandId);
 
     /**
-     * 获取用户关注列表
+     * 사용자 관심 목록 가져오기
      */
     Page<MemberBrandAttention> list(Integer pageNum, Integer pageSize);
 
     /**
-     * 获取用户关注详情
+     * 사용자의 팔로잉에 대한 세부 정보 가져오기
      */
     MemberBrandAttention detail(Long brandId);
 
     /**
-     * 清空关注列表
+     * 관심 목록 지우기
      */
     void clear();
 }

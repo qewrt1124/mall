@@ -10,8 +10,8 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 
 
 /**
- * Jackson相关配置
- * 配置json不返回null的字段
+ * Jackson 관련 구성
+ * null을 반환하지 않는 JSON 필드 구성
  * Created by macro on 2018/8/2.
  */
 @Configuration
@@ -22,14 +22,14 @@ public class JacksonConfig {
     public ObjectMapper jacksonObjectMapper(Jackson2ObjectMapperBuilder builder) {
         ObjectMapper objectMapper = builder.createXmlMapper(false).build();
 
-        // 通过该方法对mapper对象进行设置，所有序列化的对象都将按该规则进行系列化
-        // Include.ALWAYS 默认
-        // Include.NON_DEFAULT 属性为默认值不序列化
-        // Include.NON_EMPTY 属性为空（""）或者为NULL都不序列化，返回的json是没有这个字段的
-        // Include.NON_NULL 属性为NULL的字段不序列化
+        // 이 메서드로 매퍼 개체를 설정하면 serialize된 모든 개체가 이 규칙에 따라 serialize됩니다
+        // Include.ALWAYS 기본값
+        // Include.NON_DEFAULT 속성은 기본값으로 serialize되지 않습니다
+        // Include.NON_EMPTY 비어 있는("") 또는 NULL인 속성은 직렬화되지 않으며 반환된 json에는 이 필드가 없습니다
+        // Include.NON_NULL NULL 특성이 있는 필드는 직렬화되지 않습니다
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
-        // 字段保留，将null值转为""
+        // 필드가 유지되고 null 값이 ""로 변경됩니다.
 //        objectMapper.getSerializerProvider().setNullValueSerializer(new JsonSerializer<Object>()
 //        {
 //            @Override

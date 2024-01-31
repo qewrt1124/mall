@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 /**
- * Spring工具类
+ * Spring 유틸리티
  * Created by macro on 2020/3/3.
  */
 @Component
@@ -14,7 +14,7 @@ public class SpringUtil implements ApplicationContextAware {
 
     private static ApplicationContext applicationContext;
 
-    // 获取applicationContext
+    // applicationContext 가져오다
     public static ApplicationContext getApplicationContext() {
         return applicationContext;
     }
@@ -26,17 +26,17 @@ public class SpringUtil implements ApplicationContextAware {
         }
     }
 
-    // 通过name获取Bean
+    // 이름으로 Bean을 가져옵니다.
     public static Object getBean(String name) {
         return getApplicationContext().getBean(name);
     }
 
-    // 通过class获取Bean
+    // 클래스별로 Bean 가져 오기
     public static <T> T getBean(Class<T> clazz) {
         return getApplicationContext().getBean(clazz);
     }
 
-    // 通过name,以及Clazz返回指定的Bean
+    // 지정된 Bean을 이름으로 반환하고 Clazz
     public static <T> T getBean(String name, Class<T> clazz) {
         return getApplicationContext().getBean(name, clazz);
     }

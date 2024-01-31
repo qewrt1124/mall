@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 /**
- * 取消超时订单并解锁库存的定时器
+ * 시간 초과된 주문을 취소하고 재고를 잠금 해제하는 타이머
  * Created by macro on 2018/8/24.
  */
 //@Component
@@ -18,8 +18,8 @@ public class OrderTimeOutCancelTask {
     private OmsPortalOrderService portalOrderService;
 
     /**
-     * cron表达式：Seconds Minutes Hours DayofMonth Month DayofWeek [Year]
-     * 每10分钟扫描一次，扫描超时未支付订单，进行取消操作
+     * cron 표현식:초, 분, 시간, Dayof Month, 월, Dayof Week[연도]
+     * 10분마다 스캔하고 스캔 시간 초과 후 미결제 주문을 취소합니다.
      */
     @Scheduled(cron = "0 0/10 * ? * ?")
     private void cancelTimeOutOrder(){

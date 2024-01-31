@@ -8,22 +8,22 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * 前台购物车商品管理自定义Dao
+ * 프런트 엔드 쇼핑 카트 항목 관리 사용자 지정 Dao
  * Created by macro on 2018/8/2.
  */
 public interface PortalProductDao {
     /**
-     * 获取购物车商品信息
+     * 장바구니 정보 가져오기
      */
     CartProduct getCartProduct(@Param("id") Long id);
 
     /**
-     * 获取促销商品信息列表
+     * 판촉 제품 목록 목록 가져오기
      */
     List<PromotionProduct> getPromotionProductList(@Param("ids") List<Long> ids);
 
     /**
-     * 获取可用优惠券列表
+     * 사용 가능한 쿠폰 목록 가져오기
      */
     List<SmsCoupon> getAvailableCouponList(@Param("productId") Long productId, @Param("productCategoryId") Long productCategoryId);
 }

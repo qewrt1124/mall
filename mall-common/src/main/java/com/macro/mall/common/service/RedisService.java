@@ -5,178 +5,178 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Redis操作Service
+ * Redis 운영 서비스
  * Created by macro on 2020/3/3.
  */
 public interface RedisService {
 
     /**
-     * 保存属性
+     * 속성 저장
      */
     void set(String key, Object value, long time);
 
     /**
-     * 保存属性
+     * 속성 저장
      */
     void set(String key, Object value);
 
     /**
-     * 获取属性
+     * 속성 가져오기
      */
     Object get(String key);
 
     /**
-     * 删除属性
+     * 속성 삭제
      */
     Boolean del(String key);
 
     /**
-     * 批量删除属性
+     * 일괄적으로 속성 삭제
      */
     Long del(List<String> keys);
 
     /**
-     * 设置过期时间
+     * 만료 시간 설정
      */
     Boolean expire(String key, long time);
 
     /**
-     * 获取过期时间
+     * 만료 시간 가져오기
      */
     Long getExpire(String key);
 
     /**
-     * 判断是否有该属性
+     * 속성이 존재하는지 확인
      */
     Boolean hasKey(String key);
 
     /**
-     * 按delta递增
+     * 델타만큼 증가
      */
     Long incr(String key, long delta);
 
     /**
-     * 按delta递减
+     * 델타만큼 감소
      */
     Long decr(String key, long delta);
 
     /**
-     * 获取Hash结构中的属性
+     * 해시 구조에서 속성 가져오기
      */
     Object hGet(String key, String hashKey);
 
     /**
-     * 向Hash结构中放入一个属性
+     * 해시 구조에 속성 추가
      */
     Boolean hSet(String key, String hashKey, Object value, long time);
 
     /**
-     * 向Hash结构中放入一个属性
+     * 해시 구조에 속성 추가
      */
     void hSet(String key, String hashKey, Object value);
 
     /**
-     * 直接获取整个Hash结构
+     * 전체 해시 구조를 직접 가져옵니다.
      */
     Map<Object, Object> hGetAll(String key);
 
     /**
-     * 直接设置整个Hash结构
+     * 전체 Hash 구조를 직접 설정
      */
     Boolean hSetAll(String key, Map<String, Object> map, long time);
 
     /**
-     * 直接设置整个Hash结构
+     * 전체 Hash 구조를 직접 설정
      */
     void hSetAll(String key, Map<String, ?> map);
 
     /**
-     * 删除Hash结构中的属性
+     * 해시 구조에서 속성 삭제
      */
     void hDel(String key, Object... hashKey);
 
     /**
-     * 判断Hash结构中是否有该属性
+     * 해시 구조에 속성이 존재하는지 확인
      */
     Boolean hHasKey(String key, String hashKey);
 
     /**
-     * Hash结构中属性递增
+     * 해시 구조의 속성 증가
      */
     Long hIncr(String key, String hashKey, Long delta);
 
     /**
-     * Hash结构中属性递减
+     * 해시 구조의 속성 감소
      */
     Long hDecr(String key, String hashKey, Long delta);
 
     /**
-     * 获取Set结构
+     * Set 구조 가져오기
      */
     Set<Object> sMembers(String key);
 
     /**
-     * 向Set结构中添加属性
+     * Set 구조에 속성 추가
      */
     Long sAdd(String key, Object... values);
 
     /**
-     * 向Set结构中添加属性
+     * Set 구조에 속성 추가
      */
     Long sAdd(String key, long time, Object... values);
 
     /**
-     * 是否为Set中的属性
+     * Set의 속성인지 여부
      */
     Boolean sIsMember(String key, Object value);
 
     /**
-     * 获取Set结构的长度
+     * Set 구조의 길이를 가져옵니다.
      */
     Long sSize(String key);
 
     /**
-     * 删除Set结构中的属性
+     * Set 구조에서 속성 삭제
      */
     Long sRemove(String key, Object... values);
 
     /**
-     * 获取List结构中的属性
+     * List 구조의 속성을 가져옵니다.
      */
     List<Object> lRange(String key, long start, long end);
 
     /**
-     * 获取List结构的长度
+     * List 구조의 길이를 가져옵니다.
      */
     Long lSize(String key);
 
     /**
-     * 根据索引获取List中的属性
+     * 인덱스를 기반으로 List의 속성 가져오기
      */
     Object lIndex(String key, long index);
 
     /**
-     * 向List结构中添加属性
+     * List 구조에 속성 추가
      */
     Long lPush(String key, Object value);
 
     /**
-     * 向List结构中添加属性
+     * List 구조에 속성 추가
      */
     Long lPush(String key, Object value, long time);
 
     /**
-     * 向List结构中批量添加属性
+     * 일괄적으로 List 구조에 속성 추가
      */
     Long lPushAll(String key, Object... values);
 
     /**
-     * 向List结构中批量添加属性
+     * 일괄적으로 List 구조에 속성 추가
      */
     Long lPushAll(String key, Long time, Object... values);
 
     /**
-     * 从List结构中移除属性
+     * List 구조에서 속성 제거
      */
     Long lRemove(String key, long count, Object value);
 }

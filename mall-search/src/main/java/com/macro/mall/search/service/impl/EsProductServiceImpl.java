@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
 
 
 /**
- * 搜索商品管理Service实现类
+ * 상품 관리 서비스 구현 클래스 검색
  * Created by macro on 2018/6/19.
  */
 @Service
@@ -110,9 +110,9 @@ public class EsProductServiceImpl implements EsProductService {
     public Page<EsProduct> search(String keyword, Long brandId, Long productCategoryId, Integer pageNum, Integer pageSize,Integer sort) {
         Pageable pageable = PageRequest.of(pageNum, pageSize);
         NativeSearchQueryBuilder nativeSearchQueryBuilder = new NativeSearchQueryBuilder();
-        //分页
+        //페이지 매김
         nativeSearchQueryBuilder.withPageable(pageable);
-        //过滤
+        //여과
         if (brandId != null || productCategoryId != null) {
             BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
             if (brandId != null) {
@@ -123,7 +123,7 @@ public class EsProductServiceImpl implements EsProductService {
             }
             nativeSearchQueryBuilder.withFilter(boolQueryBuilder);
         }
-        //搜索
+        //검색
         if (StrUtil.isEmpty(keyword)) {
             nativeSearchQueryBuilder.withQuery(QueryBuilders.matchAllQuery());
         } else {
@@ -141,21 +141,21 @@ public class EsProductServiceImpl implements EsProductService {
                     .setMinScore(2);
             nativeSearchQueryBuilder.withQuery(functionScoreQueryBuilder);
         }
-        //排序
+        //종류
         if(sort==1){
-            //按新品从新到旧
+            //새 항목에서 이전 항목으로 새 항목 누르기
             nativeSearchQueryBuilder.withSorts(SortBuilders.fieldSort("id").order(SortOrder.DESC));
         }else if(sort==2){
-            //按销量从高到低
+            //판매량을 기준으로 높은 것부터 낮은 것 순으로 정렬
             nativeSearchQueryBuilder.withSorts(SortBuilders.fieldSort("sale").order(SortOrder.DESC));
         }else if(sort==3){
-            //按价格从低到高
+            //낮은 가격에서 높은 가격까지
             nativeSearchQueryBuilder.withSorts(SortBuilders.fieldSort("price").order(SortOrder.ASC));
         }else if(sort==4){
-            //按价格从高到低
+            //가격순 높은 가격부터 낮은 가격까지
             nativeSearchQueryBuilder.withSorts(SortBuilders.fieldSort("price").order(SortOrder.DESC));
         }else{
-            //按相关度
+            //관련성 기준
             nativeSearchQueryBuilder.withSorts(SortBuilders.scoreSort().order(SortOrder.DESC));
         }
         nativeSearchQueryBuilder.withSorts(SortBuilders.scoreSort().order(SortOrder.DESC));
@@ -178,7 +178,7 @@ public class EsProductServiceImpl implements EsProductService {
             String keyword = esProduct.getName();
             Long brandId = esProduct.getBrandId();
             Long productCategoryId = esProduct.getProductCategoryId();
-            //根据商品标题、品牌、分类进行搜索
+            //제품명, 브랜드, 카테고리로 검색
             List<FunctionScoreQueryBuilder.FilterFunctionBuilder> filterFunctionBuilders = new ArrayList<>();
             filterFunctionBuilders.add(new FunctionScoreQueryBuilder.FilterFunctionBuilder(QueryBuilders.matchQuery("name", keyword),
                     ScoreFunctionBuilders.weightFactorFunction(8)));
@@ -195,10 +195,10 @@ public class EsProductServiceImpl implements EsProductService {
             FunctionScoreQueryBuilder functionScoreQueryBuilder = QueryBuilders.functionScoreQuery(builders)
                     .scoreMode(FunctionScoreQuery.ScoreMode.SUM)
                     .setMinScore(2);
-            //用于过滤掉相同的商品
+            //동일한 제품을 필터링하는 데 사용됩니다.
             BoolQueryBuilder boolQueryBuilder = new BoolQueryBuilder();
             boolQueryBuilder.mustNot(QueryBuilders.termQuery("id",id));
-            //构建查询条件
+            //쿼리 조건 작성
             NativeSearchQueryBuilder builder = new NativeSearchQueryBuilder();
             builder.withQuery(functionScoreQueryBuilder);
             builder.withFilter(boolQueryBuilder);
@@ -218,17 +218,17 @@ public class EsProductServiceImpl implements EsProductService {
     @Override
     public EsProductRelatedInfo searchRelatedInfo(String keyword) {
         NativeSearchQueryBuilder builder = new NativeSearchQueryBuilder();
-        //搜索条件
+        //검색 기준
         if(StrUtil.isEmpty(keyword)){
             builder.withQuery(QueryBuilders.matchAllQuery());
         }else{
             builder.withQuery(QueryBuilders.multiMatchQuery(keyword,"name","subTitle","keywords"));
         }
-        //聚合搜索品牌名称
+        //브랜드 이름에 대한 집계 검색
         builder.withAggregations(AggregationBuilders.terms("brandNames").field("brandName"));
-        //聚合搜索分类名称
+        //집계 검색 분류 이름
         builder.withAggregations(AggregationBuilders.terms("productCategoryNames").field("productCategoryName"));
-        //聚合搜索商品属性，去除type=0的属性
+        //검색 제품 속성을 집계하고 type=0 속성을 제거합니다.
         AbstractAggregationBuilder aggregationBuilder = AggregationBuilders.nested("allAttrValues","attrValueList")
                 .subAggregation(AggregationBuilders.filter("productAttrs",QueryBuilders.termQuery("attrValueList.type",1))
                         .subAggregation(AggregationBuilders.terms("attrIds")
@@ -244,26 +244,26 @@ public class EsProductServiceImpl implements EsProductService {
     }
 
     /**
-     * 将返回结果转换为对象
+     * 반환된 결과를 개체로 변환합니다
      */
     private EsProductRelatedInfo convertProductRelatedInfo(SearchHits<EsProduct> response) {
         EsProductRelatedInfo productRelatedInfo = new EsProductRelatedInfo();
         Map<String, Aggregation> aggregationMap = ((Aggregations)response.getAggregations().aggregations()).asMap();
-        //设置品牌
+        //브랜딩 설정
         Aggregation brandNames = aggregationMap.get("brandNames");
         List<String> brandNameList = new ArrayList<>();
         for(int i = 0; i<((Terms) brandNames).getBuckets().size(); i++){
             brandNameList.add(((Terms) brandNames).getBuckets().get(i).getKeyAsString());
         }
         productRelatedInfo.setBrandNames(brandNameList);
-        //设置分类
+        //분류 설정
         Aggregation productCategoryNames = aggregationMap.get("productCategoryNames");
         List<String> productCategoryNameList = new ArrayList<>();
         for(int i=0;i<((Terms) productCategoryNames).getBuckets().size();i++){
             productCategoryNameList.add(((Terms) productCategoryNames).getBuckets().get(i).getKeyAsString());
         }
         productRelatedInfo.setProductCategoryNames(productCategoryNameList);
-        //设置参数
+        //매개 변수 설정
         Aggregation productAttrs = aggregationMap.get("allAttrValues");
         List<? extends Terms.Bucket> attrIds = ((ParsedLongTerms) ((ParsedFilter) ((ParsedNested) productAttrs).getAggregations().get("productAttrs")).getAggregations().get("attrIds")).getBuckets();
         List<EsProductRelatedInfo.ProductAttr> attrList = new ArrayList<>();

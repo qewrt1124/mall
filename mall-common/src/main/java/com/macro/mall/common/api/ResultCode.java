@@ -1,7 +1,7 @@
 package com.macro.mall.common.api;
 
 /**
- * API返回码封装类
+ * API 반환 코드 캡슐화 클래스
  * Created by macro on 2019/4/19.
  */
 public enum ResultCode implements IErrorCode {

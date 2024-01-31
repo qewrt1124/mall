@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Created by macro on 2018/8/27.
- * 前台商品查询逻辑单元测试
+ * 프런트 엔드 항목 쿼리 논리 단위 테스트Front-end item query logic unit test
  */
 @SpringBootTest
 public class PortalProductDaoTests {
